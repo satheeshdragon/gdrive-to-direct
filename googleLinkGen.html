@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>G-Drive Link</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <style>
+    .copy-box {
+      position: relative;
+      padding: 1rem;
+      border: 1px solid #ced4da;
+      border-radius: 0.25rem;
+      background-color: #f8f9fa;
+    }
+    .copy-button {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+    }
+  </style>
+
+</head>
+<body>
+
+<div class="jumbotron text-center">
+  <h1>G-Drive Direct link</h1>
+  <p>Drive link to Direct link Convertion</p> 
+</div>
+  
+<div class="container">
+  <div class="row">
+    <div class="col-sm-2">
+      
+    </div>
+    <div class="col-sm-8 text-center">
+      <h3>Link</h3>
+      <input type="text" class="form-control gdrive-link" name="">
+      <br>
+      <h3><button class="btn btn-primary" onclick="copyToClipboard('#copyText')">Copy</button></h3>
+      <h4></h4>
+
+      <div class="copy-box">
+
+      	
+      	<br>
+      
+      <p id="copyText">Converted link.</p>
+    </div>
+
+    </div>
+    <div class="col-sm-4">
+     
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+ 
+<script type="text/javascript">
+	const Apikey = 'AIzaSyAo7Im4FW9ICwz5FyoCFAU0cxwdAJ09x5A';
+	const GdriveLink = 'https://www.googleapis.com/drive/v3/files/xxxxx?alt=media&key='+Apikey;
+	$(document).ready(function(){
+		$(document).on('change keyup','.gdrive-link',function(){
+			var replaceText = getFileID();
+			//GdriveLink.replace("xxxxx", replaceText);
+			$('#copyText').text(GdriveLink.replace("xxxxx", replaceText));
+		});
+	});
+
+	function getFileID(){
+		// The Google Drive URL
+	    const url = $('.gdrive-link').val();
+
+	    // Create a URL object
+	    const urlObj = new URL(url);
+
+	    // Split the pathname to get the file ID
+	    const pathParts = urlObj.pathname.split('/');
+	    const fileId = pathParts.length > 2 ? pathParts[3] : null;
+
+	    // Log the file ID to the console
+	    console.log("File ID:", fileId);
+
+	    return fileId;
+	}
+
+	function copyToClipboard(element) {
+      var $temp = $("<input>");
+      $("body").append($temp);
+      $temp.val($(element).text()).select();
+      document.execCommand("copy");
+      $temp.remove();
+      alert("Copied to clipboard");
+    }
+</script>
